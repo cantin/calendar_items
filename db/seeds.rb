@@ -8,7 +8,7 @@
 
 Interviewer.transaction do
   5.times do |i|
-    Interviewer.create!(name: "interviewer_#{i}")
-    Interviewee.create!(name: "interviewee_#{i}")
+    Interviewer.create!(name: "interviewer_#{i + 1}")
+    Interviewee.create!(name: "interviewee_#{i + 1}")
   end
 end

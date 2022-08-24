@@ -19,8 +19,12 @@ const init = () => {
 
     received(data) {
       let config = $('[data-interview]').data('interview')
-      let result = (data.message == 'open' && data.date == config.date) || (data.message == 'dismiss' && data.date == config.date) ||
-        (data.message == 'update' && data.date == config.date && data.interviewee_id != config.id)
+      if (data.message == 'dismiss' && data.date == config.date) {
+        $('[data-date-form]').submit()
+      }
+
+      let result = (data.message == 'open' && data.date == config.date) ||
+        (data.message == 'update' && data.date == config.date)
 
       if (result) {
         ajaxHTML({

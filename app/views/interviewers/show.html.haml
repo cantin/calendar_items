@@ -7,4 +7,4 @@
   .row
     - @interviewer.calendar_item_list(@date).each_with_index do |item, index|
       .col-3
-        = render 'manage/calendar_items/calendar_item', item: item, interviewer: @interviewer
+        = render 'calendar_items/calendar_item', item: item, interviewer: @interviewer

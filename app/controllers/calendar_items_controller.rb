@@ -1,4 +1,4 @@
-class Manage::CalendarItemsController < ApplicationController
+class CalendarItemsController < ApplicationController
   before_action :set_interviewer
 
   def create
@@ -40,16 +40,13 @@ class Manage::CalendarItemsController < ApplicationController
       InterviewChannel.broadcast_to(@interviewee, { message: :dismiss, interviewee_id: @interviewee.id, date: @date.to_i, item_id: @calendar_item.id })
     else
       ActionCable.server.broadcast(
-        "interviewees", { message: :open, date: @date.to_i, item_id: @calendar_item.id }
+        "interviewees", { message: :dismiss, date: @date.to_i, item_id: @calendar_item.id }
       )
     end
   end
 
   private def set_interviewer
     @interviewer = Interviewer.find(params[:interviewer_id])
-  end
-
-  private def broadcast_changes
   end
 
   private

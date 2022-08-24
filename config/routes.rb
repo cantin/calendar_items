@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     end
   end
   resources :interviewers do
-    resources :calendar_items, controller: 'manage/calendar_items', only: [:create, :update] do
+    resources :calendar_items, only: [:create, :update] do
       member do
         post 'cancel'
       end

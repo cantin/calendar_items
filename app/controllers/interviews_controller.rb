@@ -34,7 +34,7 @@ class InterviewsController < ApplicationController
       "#{@item.interviewer.id}",
       {
         message: :update,
-        content: render_to_string('manage/calendar_items/notify', locals: { item: @item, interviewer: @item.interviewer })
+        content: render_to_string('calendar_items/notify', locals: { item: @item, interviewer: @item.interviewer })
       }
     )
 
