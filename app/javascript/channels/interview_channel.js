@@ -1,5 +1,6 @@
 import consumer from "./consumer"
 import { ajaxHTML } from '../src/ajax'
+import $ from 'jQuery'
 
 const init = () => {
   consumer.subscriptions.create("InterviewChannel", {
@@ -12,9 +13,10 @@ const init = () => {
     },
 
     received(data) {
-      if (data.date == DATE && data.interviewee_id != IntervieweeID) {
+      let config = $('[data-interview]').data('interview')
+      if (data.message == 'update' && data.date == config.date && data.interviewee_id != config.id) {
         ajaxHTML({
-          url: FetchInterviewUrl,
+          url: config.url,
           data: data
         })
       }
@@ -22,4 +24,9 @@ const init = () => {
   });
 }
 
-typeof IntervieweeID != 'undefined' && init()
+$(() => {
+  if ($('[data-interview]').length) {
+    init()
+  }
+})
+

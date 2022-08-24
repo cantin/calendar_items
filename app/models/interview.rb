@@ -1,6 +1,5 @@
 class Interview
   include ActiveModel::Conversion
-
   # ContactMessage are never persisted in the DB
   def persisted?
     false

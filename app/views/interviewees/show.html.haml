@@ -1,15 +1,17 @@
-%ya-turbo-frame#interview-list
+:ruby
+  json = {
+    date: @date.to_i,
+    id: @interviewee.id,
+    url: interviews_show_interviewee_path
+  }
+
+%ya-turbo-frame#interview-list{ "data-interview": json.to_json.html_safe }
   %h3= @interviewee.name
 
   = form_tag interviewee_path(@interviewee), method: :get, 'd-state': '{}', 'd-ref': 'form' do
     = select_tag "date", options_for_select(date_selector_options, @date.strftime("%F")), 'd-change': 'this.refs.form.submit()'
 
   .row
-    - interview_list_for_interviwee(@date, @interviewee).each_with_index do |interview, index|
+    - @interviewee.interview_list(@date).each_with_index do |interview, index|
       .col-3
         = render interview
-
-:javascript
-  IntervieweeID = #{@interviewee.id}
-  DATE = #{@date.to_i}
-  FetchInterviewUrl = #{interviews_show_interviewee_path.to_json.html_safe}

@@ -1,11 +1,12 @@
 import consumer from "./consumer"
 import { runYetAnotherTurboStream } from '../src/yet_another_turbo_stream'
+import $ from 'jQuery'
 
 const init = () => {
+  let id = $('[data-calendar-item-list]').data('calendar-item-list').id
   consumer.subscriptions.create({
     channel: "CalendarItemsChannel",
-    id: InterviewerID,
-    date: DATE,
+    id: id,
   }, {
     connected() {
       console.log('connected')
@@ -16,10 +17,17 @@ const init = () => {
     },
 
     received(data) {
-      let doc = new DOMParser().parseFromString(data.content, "text/html")
-      runYetAnotherTurboStream(doc)
+      if (data.message == 'update') {
+        let doc = new DOMParser().parseFromString(data.content, "text/html")
+        runYetAnotherTurboStream(doc)
+      }
     }
   });
 }
 
-typeof InterviewerID !== 'undefined' && init()
+$(() => {
+  if ($('[data-calendar-item-list]').length) {
+    init()
+  }
+})
+

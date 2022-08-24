@@ -35,6 +35,11 @@ class CalendarItem < ApplicationRecord
     end
   end
 
+  def self.within_a_day(date)
+    date = date.beginning_of_day
+    self.where(start_time: date..(date+1.day))
+  end
+
   private def validate_time
     errors.add('', "The minute of start time must be one of #{mins}") if !Mins.include?(start_time.min)
     errors.add(:meeting_duration, "should be 15 minutes") if duration != Duration

@@ -25,7 +25,7 @@ class InterviewsController < ApplicationController
 
   def show
     @date = Time.zone.at(Integer(params[:date]))
-    @interview = view_context.interview_list_for_interviwee(@date, @interviewee).find { _1.start_time == @item.start_time }
+    @interview = @interviewee.interview_list(@date).find { _1.start_time == @item.start_time }
   end
 
   private def broadcast_changes
