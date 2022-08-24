@@ -42,6 +42,15 @@ const initRailsUJS = (Rails) => {
   }
 }
 
+class DateForm extends DRender.Component {
+  submit() {
+    this.refs.form.submit()
+    let url = new URL(location.href)
+    history.pushState({}, '', `?${this.refs.form.serialize()}`)
+  }
+}
+DRender.registerComponents(DateForm)
+
 $(() => {
   initRailsUJS(Rails)
   activateYetAnotherTurboFrame()

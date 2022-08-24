@@ -8,23 +8,48 @@ class Manage::CalendarItemsController < ApplicationController
       status: :available
     )
     @calendar_item.save!
+
+    @date = @calendar_item.start_time.beginning_of_day
+    ActionCable.server.broadcast(
+      "interviewees", { message: :open, date: @date.to_i, item_id: @calendar_item.id }
+    )
   rescue => e
     flash[:error] = "Unable to make calendar item available. Please try again. #{e}"
   end
 
   def update
     @calendar_item = @interviewer.calendar_items.find(params[:id])
+
+    raise 'Wrong state' unless @calendar_item.canceled?
     @calendar_item.update!(status: :available)
+
+    @date = @calendar_item.start_time.beginning_of_day
+    ActionCable.server.broadcast(
+      "interviewees", { message: :open, date: @date.to_i, item_id: @calendar_item.id }
+    )
     render 'create'
   end
 
   def cancel
     @calendar_item = @interviewer.calendar_items.find(params[:id])
-    @calendar_item.update!(status: :canceled)
+    @interviewee = @calendar_item.interviewee
+    @calendar_item.dismiss!
+
+    @date = @calendar_item.start_time.beginning_of_day
+    if @interviewee
+      InterviewChannel.broadcast_to(@interviewee, { message: :dismiss, interviewee_id: @interviewee.id, date: @date.to_i, item_id: @calendar_item.id })
+    else
+      ActionCable.server.broadcast(
+        "interviewees", { message: :open, date: @date.to_i, item_id: @calendar_item.id }
+      )
+    end
   end
 
   private def set_interviewer
     @interviewer = Interviewer.find(params[:interviewer_id])
+  end
+
+  private def broadcast_changes
   end
 
   private

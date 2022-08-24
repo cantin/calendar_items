@@ -8,8 +8,8 @@
 %ya-turbo-frame#interview-list{ "data-interview": json.to_json.html_safe }
   %h3= @interviewee.name
 
-  = form_tag interviewee_path(@interviewee), method: :get, 'd-state': '{}', 'd-ref': 'form' do
-    = select_tag "date", options_for_select(date_selector_options, @date.strftime("%F")), 'd-change': 'this.refs.form.submit()'
+  = form_tag interviewee_path(@interviewee), method: :get, 'd-component': 'DateForm', 'd-ref': 'form' do
+    = select_tag "date", options_for_select(date_selector_options, @date.strftime("%F")), 'd-change': 'submit'
 
   .row
     - @interviewee.interview_list(@date).each_with_index do |interview, index|

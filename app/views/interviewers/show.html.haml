@@ -1,8 +1,8 @@
 %ya-turbo-frame#calendar-item-list{ 'data-calendar-item-list': { id: @interviewer.id }.to_json.html_safe }
   %h3= @interviewer.name
 
-  = form_tag interviewer_path(@interviewer), method: :get, 'd-state': '{}', 'd-ref': 'form' do
-    = select_tag "date", options_for_select(date_selector_options, @date.strftime("%F")), 'd-change': 'this.refs.form.submit()'
+  = form_tag interviewer_path(@interviewer), method: :get, 'd-component': 'DateForm', 'd-ref': 'form' do
+    = select_tag "date", options_for_select(date_selector_options, @date.strftime("%F")), 'd-change': 'submit'
 
   .row
     - @interviewer.calendar_item_list(@date).each_with_index do |item, index|

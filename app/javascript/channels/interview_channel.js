@@ -3,7 +3,12 @@ import { ajaxHTML } from '../src/ajax'
 import $ from 'jQuery'
 
 const init = () => {
-  consumer.subscriptions.create("InterviewChannel", {
+  let config = $('[data-interview]').data('interview')
+  consumer.subscriptions.create(
+    {
+      channel: "InterviewChannel",
+      id: config.id,
+    }, {
     connected() {
       // Called when the subscription is ready for use on the server
     },
@@ -14,7 +19,10 @@ const init = () => {
 
     received(data) {
       let config = $('[data-interview]').data('interview')
-      if (data.message == 'update' && data.date == config.date && data.interviewee_id != config.id) {
+      let result = (data.message == 'open' && data.date == config.date) || (data.message == 'dismiss' && data.date == config.date) ||
+        (data.message == 'update' && data.date == config.date && data.interviewee_id != config.id)
+
+      if (result) {
         ajaxHTML({
           url: config.url,
           data: data

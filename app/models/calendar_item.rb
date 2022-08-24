@@ -35,6 +35,12 @@ class CalendarItem < ApplicationRecord
     end
   end
 
+  def dismiss!
+    with_lock do
+      update!(status: :canceled, interviewee: nil)
+    end
+  end
+
   def self.within_a_day(date)
     date = date.beginning_of_day
     self.where(start_time: date..(date+1.day))
