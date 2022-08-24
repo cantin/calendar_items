@@ -1,0 +1,33 @@
+%h1 Listing users
+
+.container
+  .row
+    .col.mx-auto
+      %table.table
+        %thead
+          %tr
+            %th Name
+            %th
+            %th
+            %th
+
+        %tbody#user-list
+          - @users.each do |user|
+            %tr
+              %td= user.name
+              %td= link_to 'Show', user
+              %td= link_to 'Edit', edit_user_path(user)
+              %td= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+.float-end
+  %ya-turbo-frame#new-user-form
+    = link_to 'New User', new_user_path, class: 'btn btn-primary mb-5'
+
+-#.container.px-4.text-center
+  -#.row.gx-5
+    -#.col
+      -#.p-3.border.bg-light Custom column padding
+    -#.col
+      -#.p-3.border.bg-light Custom column padding

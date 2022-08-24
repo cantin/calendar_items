@@ -1,0 +1,131 @@
+$information: #E4F1FE !default;
+$success: #C8F7C5 !default;
+$notice: #FAEAC9 !default;
+$warning: #FCCAD3 !default;
+$error: #C0392B !default;
+
+@mixin flash_style($color) {
+  background-color: $color;
+  border-color: darken($color, 10%);
+  @if lightness($color) > 50 {
+    // color: darken($color, 70%);
+    color: #000;
+  } @else {
+    color: #fff;
+  }
+}
+
+/* The Modal (background) */
+div.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1006; /* Sit on top */
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  position: fixed;
+  overflow: hidden;
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  margin: 0;
+  &.notice {
+    .modal-content {
+      .modal-header {
+        h2 {
+          @include flash_style($notice);
+        }
+      }
+    }
+  }
+  &.warning {
+    .modal-content {
+      .modal-header {
+        h2 {
+          @include flash_style($warning);
+        }
+      }
+    }
+  }
+  &.error {
+    .modal-content {
+      .modal-header {
+        h2 {
+          @include flash_style($error);
+        }
+      }
+    }
+  }
+  .modal-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, calc(-50%));
+    -ms-transform: translateX(-50%) translateY(-50%); //Silly IE11 doesn't know calc() function
+    transform: translate(-50%, calc(-50%));
+    margin: auto;
+    padding: 0;
+    width: 40rem;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    animation-name: animatefade;
+    animation-duration: 0.6s;
+    background: #fff;
+    border-radius: .5rem;
+    border: 2px solid #888;
+    text-align: left;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    .modal-header {
+      background: #888;
+      h2 {
+        padding: .5rem 1rem;
+        border-radius: .5rem .5rem 0 0;
+        color: #000; 
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin: 0;
+        &:empty {
+          display: none;
+        }
+      }
+    }
+    .modal-body {
+      overflow: scroll;
+      flex: 1;
+      padding: 1rem 1rem 4rem 1rem;
+      font-size: 1.2rem;
+      .centered {
+        text-align: center;
+      }
+      p {
+        font-size: 1.2rem;
+      }
+    }
+    .modal-footer {
+      padding: 1rem;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      border-top: 1px solid #eee;
+      button {
+        margin-left: .8rem;
+        margin-bottom: 0;
+      }
+      .action {
+        color: #fff;
+        border: solid 1px #3eb096;
+        background-color: #3eb096;
+      }
+    }
+
+    @keyframes animatefade {
+      from { opacity:0 }
+      to { opacity:1 }
+    }
+  }
+}
+
+
