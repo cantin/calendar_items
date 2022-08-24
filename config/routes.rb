@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     member do
       post 'interviews', to: 'interviews#apply'
       post 'interviews/cancel'
+      get 'interviews/show'
     end
   end
   resources :interviewers do

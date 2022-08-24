@@ -9,6 +9,7 @@ import modal from './src/modal'
 import { activateYetAnotherTurboFrame } from "./src/yet_another_turbo_frame"
 import DRender from './src/d_render'
 import { ajax } from './src/ajax'
+import "./channels"
 
 window.$ = $
 window.modal = modal
@@ -46,4 +47,3 @@ $(() => {
   activateYetAnotherTurboFrame()
   DRender.run()
 })
-import "./channels"

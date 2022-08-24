@@ -7,4 +7,9 @@
   .row
     - interview_list_for_interviwee(@date, @interviewee).each_with_index do |interview, index|
       .col-3
-        = render interview, index: index
+        = render interview
+
+:javascript
+  IntervieweeID = #{@interviewee.id}
+  DATE = #{@date.to_i}
+  FetchInterviewUrl = #{interviews_show_interviewee_path.to_json.html_safe}

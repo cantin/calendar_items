@@ -1,19 +1,25 @@
 import consumer from "./consumer"
+import { runYetAnotherTurboStream } from '../src/yet_another_turbo_stream'
 
-consumer.subscriptions.create({
-  channel: "CalendarItemsChannel",
-  id: InterviewerID,
-  date: DATE,
-}, {
-  connected() {
-    // Called when the subscription is ready for use on the server
-  },
+const init = () => {
+  consumer.subscriptions.create({
+    channel: "CalendarItemsChannel",
+    id: InterviewerID,
+    date: DATE,
+  }, {
+    connected() {
+      console.log('connected')
+    },
 
-  disconnected() {
-    // Called when the subscription has been terminated by the server
-  },
+    disconnected() {
+      // Called when the subscription has been terminated by the server
+    },
 
-  received(data) {
-    // Called when there's incoming data on the websocket for this channel
-  }
-});
+    received(data) {
+      let doc = new DOMParser().parseFromString(data.content, "text/html")
+      runYetAnotherTurboStream(doc)
+    }
+  });
+}
+
+typeof InterviewerID !== 'undefined' && init()

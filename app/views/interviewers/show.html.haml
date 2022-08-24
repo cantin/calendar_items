@@ -7,4 +7,9 @@
   .row
     - calendar_item_candidate_list(@date, @interviewer).each_with_index do |item, index|
       .col-3
-        = render 'manage/calendar_items/calendar_item', item: item, index: index
+        = render 'manage/calendar_items/calendar_item', item: item, interviewer: @interviewer
+
+:javascript
+  window.InterviewerID = #{@interviewer.id}
+  DATE = #{@date.to_i}
+
