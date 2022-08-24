@@ -1,0 +1,21 @@
+%h1 Listing interviewers
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th
+      %th
+      %th
+
+  %tbody
+    - @interviewers.each do |interviewer|
+      %tr
+        %td= interviewer.name
+        %td= link_to 'Show', interviewer
+        %td= link_to 'Edit', edit_interviewer_path(interviewer)
+        %td= link_to 'Destroy', interviewer, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Interviewer', new_interviewer_path

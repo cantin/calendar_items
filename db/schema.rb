@@ -10,9 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_22_120112) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_24_020748) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "calendar_items", force: :cascade do |t|
+    t.bigint "interviewee_id"
+    t.bigint "interviewer_id", null: false
+    t.datetime "start_time", precision: nil
+    t.integer "duration"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["interviewee_id"], name: "index_calendar_items_on_interviewee_id"
+    t.index ["interviewer_id"], name: "index_calendar_items_on_interviewer_id"
+  end
+
+  create_table "interviewees", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "interviewers", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
@@ -20,4 +44,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_22_120112) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "calendar_items", "interviewers"
 end

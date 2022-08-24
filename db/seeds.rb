@@ -5,3 +5,10 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+Interviewer.transaction do
+  5.times do |i|
+    Interviewer.create!(name: "interviewer_#{i}")
+    Interviewee.create!(name: "interviewee_#{i}")
+  end
+end

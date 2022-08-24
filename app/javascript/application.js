@@ -46,5 +46,4 @@ $(() => {
   activateYetAnotherTurboFrame()
   DRender.run()
 })
-
-
+import "./channels"

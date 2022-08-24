@@ -1,0 +1,10 @@
+%ya-turbo-frame#interview-list
+  %h3= @interviewee.name
+
+  = form_tag interviewee_path(@interviewee), method: :get, 'd-state': '{}', 'd-ref': 'form' do
+    = select_tag "date", options_for_select(date_selector_options, @date.strftime("%F")), 'd-change': 'this.refs.form.submit()'
+
+  .row
+    - interview_list_for_interviwee(@date, @interviewee).each_with_index do |interview, index|
+      .col-3
+        = render interview, index: index

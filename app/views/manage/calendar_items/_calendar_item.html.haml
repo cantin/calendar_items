@@ -1,0 +1,14 @@
+%ya-turbo-frame{ id: "item-#{index}" }
+  .card
+    .card-body
+      .card-title= fmt_calendar_item_time(item)
+      .card-text
+        = item.status
+        = item.interviewee.name if item.booked?
+      - if item.new_record?
+        = link_to "Mark as Available", interviewer_calendar_items_path(interviewer_id: @interviewer, start_time_in_sec: item.start_time.to_i, index: index), 'data-ya-turbo-method': :post
+      - else
+        - if item.canceled?
+          = link_to "Available Again", interviewer_calendar_item_path(interviewer_id: @interviewer, id: item.id, index: index), 'data-ya-turbo-method': :put
+        - else
+          = link_to "Cancel", cancel_interviewer_calendar_item_path(interviewer_id: @interviewer, id: item.id, index: index), 'data-ya-turbo-method': :post

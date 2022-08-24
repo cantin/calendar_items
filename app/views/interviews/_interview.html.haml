@@ -1,0 +1,17 @@
+.card
+  .card-body
+    .card-title= fmt_calendar_item_time(interview)
+    .card-text
+      - if interview.no_items?
+        No Meetings
+      - elsif interview.booked_by_interviewee?
+        = interview.booked.status
+        = interview.booked.interviewer.name
+    - if interview.can_be_booked?
+      = form_tag interviews_interviewee_path(id: interview.interviewee), 'data-ya-turbo-method': :post do
+        = hidden_field_tag :index, index
+        = select_tag 'item_id', options_for_select(interview.item_candidates.map { |item| [item.interviewer.name, item.id] })
+        = submit_tag "Apply"
+    - else
+      - if interview.booked_by_interviewee?
+        = link_to "Cancel", interviews_cancel_interviewee_path(id: interview.interviewee, item_id: interview.booked.id, index: index), 'data-ya-turbo-method': :post
